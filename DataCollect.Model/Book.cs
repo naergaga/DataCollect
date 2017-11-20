@@ -14,5 +14,7 @@ namespace DataCollect.Model
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+
+        public virtual List<Sheet> Sheets { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace DataCollect.Web.Data
+namespace DataCollect.Data
 {
     public class ApplicationDbContext:DbContext
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCollect.Service.Provider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,18 +14,21 @@ namespace DataCollect.Web.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Preview()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (Request.Files.Count < 0) return Json(null);
+            var file = Request.Files[0];
+            var book = BookProvider.Get(file.InputStream,file.FileName);
+            return Json(book);
         }
 
-        public ActionResult Contact()
+        public ActionResult Import()
         {
-            ViewBag.Message = "Your contact page.";
+            if (Request.Files.Count < 0) return RedirectToAction("Index");
+            var file = Request.Files[0];
+            var book = BookProvider.Get(file.InputStream, file.FileName);
 
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
