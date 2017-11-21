@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section styles{
+    <style>
+        
+    </style>
+}
+
+@section scripts{
+    <script src="~/Scripts/app/home/index.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+}
+
+<div>
+    <p>管理员导入</p>
+    <div class="col-sm-8">
+        <form action="/Home/Import" method="post" enctype="multipart/form-data">
+            <div class="d-flex form-piece">
+                <label>excel模板</label>
+                <input id="fileUpload" name="file" type="file" />
+            </div>
+            <div class="form-piece">
+                <div class="d-flex">
+                    <button type="button" id="btnPreview">预览</button>
+                    <button>导入</button>
+                </div>
+            </div>
+        </form>
+        <div id="book-preview"></div>
+    </div>
+
+    <div class="clearfix"></div>
+</div>

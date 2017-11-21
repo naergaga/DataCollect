@@ -48,6 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Migrations\201711201308184_Inital.cs" />
+    <Compile Include="Migrations\201711201308184_Inital.Designer.cs">
+      <DependentUpon>201711201308184_Inital.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +64,11 @@
       <Project>{A8AA6F69-007F-48CF-A53F-99381875135B}</Project>
       <Name>DataCollect.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711201308184_Inital.resx">
+      <DependentUpon>201711201308184_Inital.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

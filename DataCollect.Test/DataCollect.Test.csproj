@@ -49,21 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\Provider\BookProviderTest.cs" />
+    <Compile Include="Services\Service\BookServiceTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataCollect.Model\DataCollect.Model.csproj">
-      <Project>{A8AA6F69-007F-48CF-A53F-99381875135B}</Project>
-      <Name>DataCollect.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataCollect.Service\DataCollect.Service.csproj">
-      <Project>{A92C972C-4ABB-4CB6-A3D8-4BABF0BCC14E}</Project>
-      <Name>DataCollect.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

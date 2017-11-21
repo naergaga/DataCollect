@@ -1,0 +1,25 @@
+﻿@model DataCollect.Web.Models.ViewModel.Event.IndexModel
+@{
+    ViewBag.Title = "创建活动";
+}
+
+@section scripts{
+    <script src="~/Scripts/app/home/index.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+}
+
+<div>
+    <div>
+    </div>
+    <div class="card-list">
+        @foreach (var item in Model.Events)
+        {
+            <div class="card-item">
+                <div class="card-title">@item.Name</div>
+                <div class="card-content">
+                    I TEND NOT TO MIND PERFORMANCE ART as much as most people do, though when I watch it my mind sometimes drifts to a scene in Paolo Sorrentino’s The Great Beauty (2013). It’s the one where a naked woman, surrounded by a group of well-dressed twenty-first century Romans, runs headlong at an aqueduct. The woman stands, dazed and bloodied, and all of her patrons applaud politely. If the work I’m watching in real life reminds me of this scene, I know it’s probably time to leave. Such is the value of big screen depictions of visual art: they re-inject irony into that hermetic system of galleries, museums, fairs.
+                </div>
+            </div>
+        }
+    </div>
+</div>

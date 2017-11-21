@@ -18,5 +18,8 @@ namespace DataCollect.Data
         public DbSet<Column> Column { get; set; }
         public DbSet<Sheet> Sheet { get; set; }
         public DbSet<ColumnData> ColumnData { get; set; }
+        public DbSet<CollectEvent> Event { get; set; }
+        public DbSet<EventBook> EventBook { get; set; }
+        public DbSet<Row> Row { get; set; }
     }
 }

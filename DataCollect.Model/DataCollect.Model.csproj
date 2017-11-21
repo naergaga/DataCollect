@@ -44,6 +44,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="ColumnData.cs" />
+    <Compile Include="CollectEvent.cs" />
+    <Compile Include="Row.cs" />
     <Compile Include="Sheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
