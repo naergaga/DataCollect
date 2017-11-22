@@ -22,26 +22,23 @@ namespace DataCollect.Test.Services.Service
         {
             ApplicationDbContext context = DbContextProvider.Get();
             var service = new BookService(context);
-            var Columns = new List<Column>
+            service.Add(new Book
+            {
+                Name = "英雄使用统计",
+                Sheets = new List<Sheet>
+                {
+                    new Sheet
+                    {
+                        Name="Sheet1",
+                        Columns = new List<Column>
                         {
                             new Column{ Name="英雄名称"},
                             new Column{ Name="英雄场次"},
                             new Column{ Name="最佳数据"},
                             new Column{ Name="胜率"}
-                        };
-
-            var sheet = new Sheet
-            {
-                Name = "Sheet1",
-                Columns = Columns
-            };
-
-            var Sheets = new List<Sheet>();
-            Sheets.Add(sheet);
-            service.Add(new Book
-            {
-                Name = "英雄使用统计",
-                Sheets = Sheets
+                        }
+                    }
+                }
             });
         }
 
