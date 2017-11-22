@@ -1,8 +1,8 @@
-﻿using DataCollect.Data;
-using DataCollect.Model;
+﻿using DataCollect.Model;
+using DataCollect.Web.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +35,11 @@ namespace DataCollect.Service.Service
                 book.Sheets.ForEach(sheet => _sheetService.FillRows(sheet));
             });
             return collectEvent;
+        }
+
+        public List<CollectEvent> GetList()
+        {
+            return _context.Event.ToList();
         }
     }
 }

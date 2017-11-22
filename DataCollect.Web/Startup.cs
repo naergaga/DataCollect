@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DataCollect.Web.Data;
 using DataCollect.Web.Services;
+using DataCollect.Model;
+using DataCollect.Service.Service;
 
 namespace DataCollect.Web
 {
@@ -40,8 +42,7 @@ namespace DataCollect.Web
                     options.Conventions.AuthorizePage("/Account/Logout");
                 });
 
-            // Register no-op EmailSender used by account confirmation and password reset during development
-            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+            services.AddTransient<EventService>();
             services.AddSingleton<IEmailSender, EmailSender>();
         }
 

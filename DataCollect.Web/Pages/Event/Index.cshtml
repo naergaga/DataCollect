@@ -1,0 +1,28 @@
+﻿@page
+@model DataCollect.Web.Pages.Event.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div>
+    <a asp-page="/Event/Create">添加任务</a>
+</div>
+<div class="plain-list">
+    @foreach (var item in Model.EventList)
+    {
+        <div class="p-item">
+            <div><a asp-page="/Event/Item" asp-route-id="@item.Id">@item.Name</a></div>
+            <div>
+                <a asp-page="/Event/Publish">发布</a>
+                <a asp-page="/Event/Remove">删除</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

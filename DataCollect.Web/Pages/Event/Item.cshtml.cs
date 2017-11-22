@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,22 +7,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataCollect.Service.Service;
 using DataCollect.Model;
 
-namespace DataCollect.Web.Pages
+namespace DataCollect.Web.Pages.Event
 {
-    public class IndexModel : PageModel
+    public class ItemModel : PageModel
     {
         private EventService eventService;
 
-        public List<CollectEvent> EventList { get; set; }
+        public CollectEvent CollectEvent { get; set; }
 
-        public IndexModel(EventService eventService)
+        public ItemModel(EventService eventService)
         {
             this.eventService = eventService;
         }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
-            EventList = eventService.GetList();
+            this.CollectEvent=eventService.Get(id);
         }
     }
 }

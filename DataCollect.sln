@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollect.Test", "DataCollect.Test\DataCollect.Test.csproj", "{8B565439-7C18-4CD4-9185-8510FEEE5F38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollect.Web", "DataCollect.Web\DataCollect.Web.csproj", "{F07F1F87-F02C-4876-8BAD-EC716A8FE7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCollect.Web", "DataCollect.Web\DataCollect.Web.csproj", "{F07F1F87-F02C-4876-8BAD-EC716A8FE7B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

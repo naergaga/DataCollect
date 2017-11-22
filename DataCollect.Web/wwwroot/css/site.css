@@ -33,3 +33,45 @@ body {
         display: none;
     }
 }
+
+/*plain-list*/
+.plain-list{
+
+}
+
+.plain-list>.p-item{
+    display:flex;
+}
+    .plain-list > .item>div {
+        /*flex:1;*/
+    }
+
+    .plain-list>.p-item>div:nth-child(2){
+        margin-left:2rem;
+    }
+
+.d-flex {
+    display: flex;
+}
+
+/*.form-piece {
+    margin-top: 0.5rem;
+}
+
+    .form-piece *:nth-child(2) {
+        margin-left: 1rem;
+    }*/
+
+.sheet-item ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+    .sheet-item ul li {
+        padding: 0 1rem;
+    }
+
+
+

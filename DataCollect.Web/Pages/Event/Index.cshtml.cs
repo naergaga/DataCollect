@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataCollect.Service.Service;
 using DataCollect.Model;
 
-namespace DataCollect.Web.Pages
+namespace DataCollect.Web.Pages.Event
 {
     public class IndexModel : PageModel
     {
@@ -22,7 +22,7 @@ namespace DataCollect.Web.Pages
 
         public void OnGet()
         {
-            EventList = eventService.GetList();
+            this.EventList = eventService.GetList();
         }
     }
 }

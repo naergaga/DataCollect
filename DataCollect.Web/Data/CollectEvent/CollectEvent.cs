@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace DataCollect.Model
     public class CollectEvent
     {
         public int Id { get; set; }
+        [DisplayName("名称")]
         public string Name { get; set; }
 
         public virtual List<Book> Books { get; set; }

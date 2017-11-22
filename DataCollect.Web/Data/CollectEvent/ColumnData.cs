@@ -16,7 +16,6 @@ namespace DataCollect.Model
         public string Value { get; set; }
         [ForeignKey("Column")]
         public int ColumnId { get; set; }
-        [ForeignKey("Row")]
         public int RowId { get; set; }
 
         public Column Column { get; set; }

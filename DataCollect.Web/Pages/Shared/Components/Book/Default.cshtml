@@ -1,0 +1,13 @@
+﻿@model Book
+
+<h5>@Model.Name</h5>
+@foreach (var sheet in Model.Sheets)
+{
+    <h5>@sheet.Name</h5>
+    <ul class="sheet-item">
+        @foreach (var col in sheet.Columns)
+        {
+            <li>@col.Name</li>
+        }
+    </ul>
+}

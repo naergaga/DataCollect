@@ -1,8 +1,8 @@
-﻿using DataCollect.Data;
-using DataCollect.Model;
+﻿using DataCollect.Model;
+using DataCollect.Web.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
