@@ -14,10 +14,32 @@ namespace DataCollect.Service.Service
         private readonly ApplicationDbContext _context;
         private readonly SheetService _sheetService;
 
-
-        public EventService(ApplicationDbContext context)
+        public EventService(ApplicationDbContext context,
+            SheetService sheetService)
         {
             _context = context;
+            _sheetService = sheetService;
+        }
+
+        public void Publish(int id)
+        {
+            var event1 = _context.Event.SingleOrDefault(t=>t.Id == id);
+            event1.Published = true;
+            _context.Update(event1);
+            _context.SaveChanges();
+        }
+
+        public List<CollectEvent> GetList(bool published)
+        {
+            return _context.Event.Where(t => t.Published==published).ToList();
+        }
+
+        public void CanelPublish(int id)
+        {
+            var event1 = _context.Event.SingleOrDefault(t => t.Id == id);
+            event1.Published = false;
+            _context.Update(event1);
+            _context.SaveChanges();
         }
 
         public CollectEvent Get(int id)
@@ -32,7 +54,11 @@ namespace DataCollect.Service.Service
                                   select b).Include(t => t.Sheets).ToList();
             collectEvent.Books.ForEach(book =>
             {
-                book.Sheets.ForEach(sheet => _sheetService.FillRows(sheet));
+                book.Sheets.ForEach(sheet =>
+                {
+                    _sheetService.FillRows(sheet);
+                    _sheetService.FillCols(sheet);
+                });
             });
             return collectEvent;
         }

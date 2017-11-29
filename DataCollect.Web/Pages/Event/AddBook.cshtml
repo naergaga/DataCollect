@@ -1,0 +1,27 @@
+﻿@page "{id}"
+@model DataCollect.Web.Pages.Event.AddBookModel
+@{
+    ViewData["Title"] = "AddBook";
+}
+
+<h5>
+    工作簿： @Model.Event.Name
+</h5>
+<form method="post">
+    <div class="d-flex">
+        @foreach (var book in Model.BookList)
+        {
+            <div>
+                <span>@book.Name</span>
+                <input name="books" type="checkbox" value="@book.Id" />
+            </div>
+        }
+    </div>
+    <div>
+        <button>添加</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

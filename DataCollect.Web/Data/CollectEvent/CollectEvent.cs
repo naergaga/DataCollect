@@ -13,13 +13,14 @@ namespace DataCollect.Model
         public int Id { get; set; }
         [DisplayName("名称")]
         public string Name { get; set; }
+        [DefaultValue(false)]
+        public bool Published { get; set; }
 
         public virtual List<Book> Books { get; set; }
     }
 
     public class EventBook
     {
-        public int Id { get; set; }
         [ForeignKey("Book")]
         public int BookId { get; set; }
         [ForeignKey("Event")]

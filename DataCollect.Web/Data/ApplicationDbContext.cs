@@ -19,6 +19,7 @@ namespace DataCollect.Web.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<EventBook>().HasKey(t=> new { t.EventId,t.BookId });
             //需要手动清除关联数据
             builder.Entity<ColumnData>().HasOne(t => t.Row).WithMany(t => t.Data).OnDelete(DeleteBehavior.Restrict);
         }

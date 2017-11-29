@@ -43,6 +43,8 @@ namespace DataCollect.Web
                 });
 
             services.AddTransient<EventService>();
+            services.AddTransient<SheetService>();
+            services.AddTransient<BookService>();
             services.AddSingleton<IEmailSender, EmailSender>();
         }
 

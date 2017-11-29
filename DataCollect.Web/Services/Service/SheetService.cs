@@ -21,5 +21,15 @@ namespace DataCollect.Service.Service
         {
             sheet.Rows = _context.Row.Include(t=>t.Data).Where(t => t.SheetId == sheet.Id).ToList();
         }
+
+        public void FillCols(Sheet sheet)
+        {
+            sheet.Columns = _context.Column.Where(c => c.SheetId == sheet.Id).ToList();
+        }
+
+        public List<Sheet> GetList()
+        {
+            return _context.Sheet.ToList();
+        }
     }
 }

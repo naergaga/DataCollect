@@ -13,7 +13,8 @@ namespace DataCollect.Web.Pages.Event
     {
         private EventService eventService;
 
-        public List<CollectEvent> EventList { get; set; }
+        public List<CollectEvent> PublishedEventList { get; set; }
+        public List<CollectEvent> UnPublishedEventList { get; set; }
 
         public IndexModel(EventService eventService)
         {
@@ -22,7 +23,8 @@ namespace DataCollect.Web.Pages.Event
 
         public void OnGet()
         {
-            this.EventList = eventService.GetList();
+            this.PublishedEventList = eventService.GetList(true);
+            this.UnPublishedEventList = eventService.GetList(false);
         }
     }
 }

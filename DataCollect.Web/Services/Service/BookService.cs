@@ -32,6 +32,11 @@ namespace DataCollect.Service.Service
             return book;
         }
 
+        public List<Book> GetList()
+        {
+            return _context.Book.ToList();
+        }
+
         public void FillSheets(Book book)
         {
             book.Sheets.ForEach(sheet =>
