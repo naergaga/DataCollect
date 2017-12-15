@@ -1,0 +1,16 @@
+{
+	"version": 3,
+	"file": "scss/Site.css",
+	"sources": [
+		"scss/Site.scss",
+		"scss/_workbook.scss",
+		"scss/_siteTmp.scss"
+	],
+	"sourcesContent": [
+		"﻿@import \"_workbook\";\r\n@import \"_siteTmp\";\r\n",
+		"﻿\r\n",
+		"﻿body {\r\n    padding-top: 50px;\r\n    padding-bottom: 20px;\r\n}\r\n\r\n/* Wrapping element */\r\n/* Set some basic padding to keep content from hitting the edges */\r\n.body-content {\r\n    padding-left: 15px;\r\n    padding-right: 15px;\r\n}\r\n\r\n/* Carousel */\r\n.carousel-caption p {\r\n    font-size: 20px;\r\n    line-height: 1.4;\r\n}\r\n\r\n/* Make .svg files in the carousel display properly in older browsers */\r\n.carousel-inner .item img[src$=\".svg\"] {\r\n    width: 100%;\r\n}\r\n\r\n/* QR code generator */\r\n#qrCode {\r\n    margin: 15px;\r\n}\r\n\r\n/* Hide/rearrange for smaller screens */\r\n@media screen and (max-width: 767px) {\r\n    /* Hide captions */\r\n    .carousel-caption {\r\n        display: none;\r\n    }\r\n}\r\n\r\n/*plain-list*/\r\n.plain-list {\r\n}\r\n\r\n.plain-list > .p-item {\r\n    display: flex;\r\n}\r\n\r\n.plain-list > .item > div {\r\n    /*flex:1;*/\r\n}\r\n\r\n.plain-list > .p-item > div:nth-child(2) {\r\n    margin-left: 2rem;\r\n}\r\n\r\n.d-flex {\r\n    display: flex;\r\n}\r\n"
+	],
+	"mappings": ";AEAA,AAAA,IAAI,CAAC;EACD,WAAW,EAAE,IAAK;EAClB,cAAc,EAAE,IAAK;CACxB;;AAED,sBAAsB;AACtB,mEAAmE;;AACnE,AAAA,aAAa,CAAC;EACV,YAAY,EAAE,IAAK;EACnB,aAAa,EAAE,IAAK;CACvB;;AAED,cAAc;;AACd,AAAkB,iBAAD,CAAC,CAAC,CAAC;EAChB,SAAS,EAAE,IAAK;EAChB,WAAW,EAAE,GAAI;CACpB;;AAED,wEAAwE;;AACxE,AAAqC,eAAtB,CAAC,KAAK,CAAC,GAAG,CAAA,AAAA,GAAC,EAAK,MAAM,AAAX,EAAa;EACnC,KAAK,EAAE,IAAK;CACf;;AAED,uBAAuB;;AACvB,AAAA,OAAO,CAAC;EACJ,MAAM,EAAE,IAAK;CAChB;;AAED,wCAAwC;AACxC,MAAM,CAAN,MAAM,MAAM,SAAS,EAAE,KAAK;EACxB,mBAAmB;;EACnB,AAAA,iBAAiB,CAAC;IACd,OAAO,EAAE,IAAK;GACjB;;;AAGL,cAAc;;AAId,AAAc,WAAH,GAAG,OAAO,CAAC;EAClB,OAAO,EAAE,IAAK;CACjB;;;AAED,AAAsB,WAAX,GAAG,KAAK,GAAG,GAAG,CAAC;EACtB,WAAW;CACd;;;AAED,AAAuC,WAA5B,GAAG,OAAO,GAAG,GAAG,AAAA,UAAW,CAAA,AAAA,CAAC,EAAE;EACrC,WAAW,EAAE,IAAK;CACrB;;;AAED,AAAA,OAAO,CAAC;EACJ,OAAO,EAAE,IAAK;CACjB",
+	"names": []
+}

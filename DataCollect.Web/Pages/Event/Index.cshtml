@@ -1,9 +1,8 @@
-﻿@page "{id}"
+﻿@page
 @model DataCollect.Web.Pages.Event.IndexModel
 @{
     ViewData["Title"] = "Index";
 }
-
 
 <div>
     <a asp-page="/Event/Create">添加任务</a>
@@ -31,7 +30,7 @@
             <div>
                 <a asp-controller="Event" asp-action="CancelPublish" asp-route-id="@item.Id">取消发布</a>
                 <a asp-page="/Event/Remove">删除</a>
-                <a asp-page="@item.Name">数据填写</a>
+                <a asp-controller="Event" asp-action="FillIn" asp-route-id="" asp-route-eventName="@item.Name">数据填写</a>
             </div>
         </div>
     }

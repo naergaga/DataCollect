@@ -11,12 +11,16 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Book.Name" class="control-label"></label>
                 <input asp-for="Book.Name" class="form-control" />
                 <span asp-validation-for="Book.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="excelfile">Excel文件</label>
+                <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="excelfile" type="file" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

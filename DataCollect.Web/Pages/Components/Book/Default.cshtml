@@ -4,10 +4,31 @@
 @foreach (var sheet in Model.Sheets)
 {
     <h5>@sheet.Name</h5>
-    <ul class="sheet-item">
-        @foreach (var col in sheet.Columns)
+    @*<ul class="sheet-item d-flex">
+            @foreach (var col in sheet.Columns)
+            {
+                <li>@col.Name</li>
+            }
+        </ul>*@
+    <table>
+        <tr>
+            @foreach (var col in sheet.Columns)
+            {
+                <td>@col.Name</td>
+            }
+        </tr>
+        @if (sheet.Rows != null)
         {
-            <li>@col.Name</li>
+            @foreach (var row in sheet.Rows)
+            {
+                <tr>
+                    @foreach (var data in row.Data)
+                    {
+                        <td>@data.Value</td>
+                    }
+                </tr>
+            }
         }
-    </ul>
+    </table>
+
 }

@@ -13,6 +13,9 @@ using DataCollect.Web.Data;
 using DataCollect.Web.Services;
 using DataCollect.Model;
 using DataCollect.Service.Service;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using DataCollect.Web.Utities.ViewLocationExpanders;
+using DataCollect.Web.Services.Action;
 
 namespace DataCollect.Web
 {
@@ -35,14 +38,21 @@ namespace DataCollect.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc()
-                .AddRazorPagesOptions(options =>
+            services.AddMvc().AddRazorOptions(options=>
+            {
+                options.ViewLocationFormats.Add("/Pages/{1}/{0}.cshtml");
+                options.ViewLocationFormats.Add("/Pages/{1}/{0}.vbhtml");
+                options.ViewLocationFormats.Add("/Pages/{0}.cshtml");
+                options.ViewLocationFormats.Add("/Pages/{0}.vbhtml");
+            }).AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
                 });
 
             services.AddTransient<EventService>();
+            services.AddTransient<EventService>();
+            services.AddTransient<ImportAction>();
             services.AddTransient<SheetService>();
             services.AddTransient<BookService>();
             services.AddSingleton<IEmailSender, EmailSender>();

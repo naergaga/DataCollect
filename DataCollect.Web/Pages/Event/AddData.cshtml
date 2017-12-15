@@ -1,0 +1,63 @@
+﻿@using DataCollect.Web.Data.ViewModels.Event
+@using DataCollect.Web.Utities.ViewComponents
+@model CollectEvent
+
+<h4>当前用户: User1 任务: @Model.Name</h4>
+<div>
+    <div class="workbook">
+        <h3>Book1</h3>
+        <div class="sheet">
+            <h4>Sheet1</h4>
+            <div class="sheet-title">
+                <span>Title1</span>
+                <span>Title2</span>
+                <span>Title3</span>
+                <span>Title4</span>
+            </div>
+            <div class="sheet-data">
+                <div class="row-item">
+                    <span>data1</span>
+                    <span>data2</span>
+                    <span>data3</span>
+                    <span>data4</span>
+                    <div class="row-action">
+                        <a href="#">修改</a>
+                        <a href="#">删除</a>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <span>data1</span>
+                    <span>data2</span>
+                    <span>data3</span>
+                    <span>data4</span>
+                    <div class="row-action">
+                        <a href="#">修改</a>
+                        <a href="#">删除</a>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <span>data1</span>
+                    <span>data2</span>
+                    <span>data3</span>
+                    <span>data4</span>
+                    <div class="row-action">
+                        <a href="#">修改</a>
+                        <a href="#">删除</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="#">新增</a>
+            </div>
+        </div>
+        <div>Sheet2</div>
+        ...
+    </div>
+    @foreach (var book in Model.Books)
+    {
+        @(await Component.InvokeAsync<BookViewComponent>(book))
+        <form method="post" enctype="multipart/form-data" asp-controller="Event" asp-action="DoFillIn" asp-route-id="@book.Id">
+            <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="excelfile" type="file" /><button>上传</button>
+        </form>
+    }
+</div>

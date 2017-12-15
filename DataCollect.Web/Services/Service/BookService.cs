@@ -24,6 +24,14 @@ namespace DataCollect.Service.Service
             _context.SaveChanges();
         }
 
+        public Book Get(int id)
+        {
+            var book = _context.Book.Include(b => b.Sheets).SingleOrDefault(t => t.Id == id);
+
+            FillSheets(book);
+            return book;
+        }
+
         public Book Get(string name)
         {
             var book = _context.Book.Include(b=>b.Sheets).SingleOrDefault(t => t.Name == name);

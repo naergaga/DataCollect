@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataCollect.Service.Service;
+using DataCollect.Web.Data.ViewModels.Event;
+using Microsoft.AspNetCore.Http;
+using DataCollect.Web.Services.Action;
+using DataCollect.Model;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace DataCollect.Web.Controllers
 {
@@ -22,9 +27,19 @@ namespace DataCollect.Web.Controllers
             return RedirectToPage("/Event/Index");
         }
 
-        //public IActionResult FillIn()
-        //{
+        [HttpGet("/e/{eventName}")]
+        public IActionResult FillIn(string eventName,[FromServices]EventService eventService)
+        {
+            CollectEvent e1 = eventService.Get(eventName);
+            return View("/Pages/Event/AddData.cshtml", e1);
+        }
 
-        //}
+        [HttpPost("/Event/add/{id}")]
+        public IActionResult DoFillIn(int id, IFormFile excelfile,
+            [FromServices]ImportAction action)
+        {
+            action.Import(excelfile.OpenReadStream(),id);
+            return new RedirectToActionResult("FillIn", "Event", new { eventName = "test" });
+        }
     }
 }

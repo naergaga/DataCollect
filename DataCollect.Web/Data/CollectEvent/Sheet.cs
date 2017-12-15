@@ -16,6 +16,10 @@ namespace DataCollect.Model
         public string Name { get; set; }
         [ForeignKey("Book")]
         public int BookId { get; set; }
+        /// <summary>
+        /// 0  base
+        /// </summary>
+        public int Index { get; set; }
 
         public virtual List<Column> Columns { get; set; }
         public virtual List<Row> Rows { get; set; }

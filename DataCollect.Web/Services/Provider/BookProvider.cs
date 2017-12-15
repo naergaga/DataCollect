@@ -1,4 +1,6 @@
 ﻿using DataCollect.Model;
+using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
@@ -11,39 +13,45 @@ namespace DataCollect.Service.Provider
 {
     public class BookProvider
     {
-        public static Book Get(Stream stream, string fileName)
+
+        public Book Get(Stream stream)
         {
-            var workBook = WorkBookProvider.Get(stream,fileName);
-
-
-            return Get(workBook,Path.GetFileNameWithoutExtension(fileName));
-        }
-
-        private static Book Get(IWorkbook workbook,string name)
-        {
-            Book book = new Book { Name = name, Sheets = new List<Sheet>()};
-            for (int index=0;index<workbook.NumberOfSheets;index++)
+            Book book = new Book { Sheets = new List<Sheet>() };
+            var sheetIndex = 1;
+            using (var reader = ExcelReaderFactory.CreateReader(stream))
             {
-                var sheet = workbook.GetSheetAt(index);
-                Sheet sheetItem = new Sheet { Name = sheet.SheetName, Columns = new List<Column>()};
-                var row = sheet.GetRow(0);
-                for (int i = row.FirstCellNum; i < row.LastCellNum; i++)
+                do
                 {
-                    var cell = row.GetCell(i);
-                    Column column = new Column { Name = cell.StringCellValue };
-                    sheetItem.Columns.Add(column);
-                }
-                book.Sheets.Add(sheetItem);
-            }
+                    var sheet = new Sheet { Index = sheetIndex++, Name = reader.Name, Columns = new List<Column>() };
+                    while (reader.Read())
+                    {
+                        bool readFullLine = true;
+                        sheet.Columns.Clear();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var colStr = reader.GetValue(i)?.ToString();
+                            if (String.IsNullOrEmpty(colStr))
+                            {
+                                readFullLine = false;
+                                break;
+                            }
+                            sheet.Columns.Add(new Column { Name = colStr });
+                        }
+                        if (readFullLine)
+                        {
+                            break;
+                        }
+                    }
 
+                    if (sheet.Columns.Count > 0)
+                    {
+                        book.Sheets.Add(sheet);
+                    }
+                    sheetIndex++;
+                } while (reader.NextResult() && book.Sheets.Count <= sheetIndex);
+            }
             return book;
         }
 
-        public static Book Get(string path)
-        {
-            var workBook = WorkBookProvider.Get(path);
-
-            return Get(workBook,Path.GetFileNameWithoutExtension(path));
-        }
     }
 }

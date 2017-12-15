@@ -46,11 +46,24 @@ namespace DataCollect.Service.Service
         {
             var collectEvent = _context.Event.SingleOrDefault(t => t.Id == id);
 
+            FillEvent(collectEvent);
+            return collectEvent;
+        }
 
+        public CollectEvent Get(string name)
+        {
+            var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
+
+            FillEvent(collectEvent);
+            return collectEvent;
+        }
+
+        private void FillEvent(CollectEvent collectEvent)
+        {
             collectEvent.Books = (from b in _context.Book
                                   join eb in _context.EventBook
                                   on b.Id equals eb.BookId
-                                  where eb.EventId == id
+                                  where eb.EventId == collectEvent.Id
                                   select b).Include(t => t.Sheets).ToList();
             collectEvent.Books.ForEach(book =>
             {
@@ -60,7 +73,6 @@ namespace DataCollect.Service.Service
                     _sheetService.FillCols(sheet);
                 });
             });
-            return collectEvent;
         }
 
         public List<CollectEvent> GetList()

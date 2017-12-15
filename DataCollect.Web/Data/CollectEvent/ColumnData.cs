@@ -13,7 +13,7 @@ namespace DataCollect.Model
     {
         public int Id { get; set; }
         [Required]
-        public string Value { get; set; }
+        public String Value { get; set; }
         [ForeignKey("Column")]
         public int ColumnId { get; set; }
         public int RowId { get; set; }
