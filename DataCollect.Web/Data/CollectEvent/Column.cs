@@ -14,6 +14,7 @@ namespace DataCollect.Model
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public int Position { get; set; }
         [ForeignKey("Sheet")]
         public int SheetId { get; set; }
         //TODO: Order

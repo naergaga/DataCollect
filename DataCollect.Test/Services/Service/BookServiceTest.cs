@@ -21,7 +21,7 @@ namespace DataCollect.Test.Services.Service
         public void Add()
         {
             ApplicationDbContext context = DbContextProvider.Get();
-            var service = new BookService(context);
+            BookService service =null;
             service.Add(new Book
             {
                 Name = "英雄使用统计",
@@ -46,7 +46,7 @@ namespace DataCollect.Test.Services.Service
         public void Get()
         {
             ApplicationDbContext context = DbContextProvider.Get();
-            var service = new BookService(context);
+            BookService service = null;
             var book = service.Get("英雄使用统计");
             Console.WriteLine(BookCommon.GetString(book));
         }

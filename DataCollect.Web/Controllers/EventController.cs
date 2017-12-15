@@ -34,12 +34,12 @@ namespace DataCollect.Web.Controllers
             return View("/Pages/Event/AddData.cshtml", e1);
         }
 
-        [HttpPost("/Event/add/{id}")]
-        public IActionResult DoFillIn(int id, IFormFile excelfile,
+        [HttpPost("/e/{eventName}/add/{id}")]
+        public IActionResult DoFillIn(int id,string eventName, IFormFile excelfile,
             [FromServices]ImportAction action)
         {
             action.Import(excelfile.OpenReadStream(),id);
-            return new RedirectToActionResult("FillIn", "Event", new { eventName = "test" });
+            return new RedirectToActionResult("FillIn", "Event", new { eventName = eventName });
         }
     }
 }

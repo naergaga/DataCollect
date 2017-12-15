@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataCollect.Model;
 using DataCollect.Web.Data;
+using DataCollect.Service.Service;
 
 namespace DataCollect.Web.Pages.Books
 {
@@ -21,14 +22,15 @@ namespace DataCollect.Web.Pages.Books
 
         public Book Book { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public ActionResult OnGet(int? id,
+            [FromServices]BookService service)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Book = await _context.Book.SingleOrDefaultAsync(m => m.Id == id);
+            Book = service.Get((int)id);
 
             if (Book == null)
             {

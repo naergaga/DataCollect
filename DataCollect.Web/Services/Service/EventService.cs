@@ -13,12 +13,14 @@ namespace DataCollect.Service.Service
     {
         private readonly ApplicationDbContext _context;
         private readonly SheetService _sheetService;
+        private readonly BookService bookService;
 
         public EventService(ApplicationDbContext context,
-            SheetService sheetService)
+            SheetService sheetService,BookService bookService)
         {
             _context = context;
             _sheetService = sheetService;
+            this.bookService = bookService;
         }
 
         public void Publish(int id)
@@ -42,6 +44,11 @@ namespace DataCollect.Service.Service
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Get Full Data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public CollectEvent Get(int id)
         {
             var collectEvent = _context.Event.SingleOrDefault(t => t.Id == id);
@@ -50,6 +57,9 @@ namespace DataCollect.Service.Service
             return collectEvent;
         }
 
+        /// <summary>
+        /// Get Full Data
+        /// </summary>
         public CollectEvent Get(string name)
         {
             var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
@@ -58,6 +68,10 @@ namespace DataCollect.Service.Service
             return collectEvent;
         }
 
+        /// <summary>
+        /// 为Event准备所有Book数据
+        /// </summary>
+        /// <param name="collectEvent"></param>
         private void FillEvent(CollectEvent collectEvent)
         {
             collectEvent.Books = (from b in _context.Book
@@ -67,11 +81,7 @@ namespace DataCollect.Service.Service
                                   select b).Include(t => t.Sheets).ToList();
             collectEvent.Books.ForEach(book =>
             {
-                book.Sheets.ForEach(sheet =>
-                {
-                    _sheetService.FillRows(sheet);
-                    _sheetService.FillCols(sheet);
-                });
+                bookService.FillSheetsData(book);
             });
         }
 

@@ -16,6 +16,7 @@ using DataCollect.Service.Service;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using DataCollect.Web.Utities.ViewLocationExpanders;
 using DataCollect.Web.Services.Action;
+using DataCollect.Web.Services.Service;
 
 namespace DataCollect.Web
 {
@@ -54,6 +55,7 @@ namespace DataCollect.Web
             services.AddTransient<EventService>();
             services.AddTransient<ImportAction>();
             services.AddTransient<SheetService>();
+            services.AddTransient<ColumnService>();
             services.AddTransient<BookService>();
             services.AddSingleton<IEmailSender, EmailSender>();
         }

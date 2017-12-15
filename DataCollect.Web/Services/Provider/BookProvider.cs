@@ -22,10 +22,11 @@ namespace DataCollect.Service.Provider
             {
                 do
                 {
+                    //Excel 表
                     var sheet = new Sheet { Index = sheetIndex++, Name = reader.Name, Columns = new List<Column>() };
                     while (reader.Read())
                     {
-                        bool readFullLine = true;
+                        bool readFullLine = true;   
                         sheet.Columns.Clear();
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
@@ -33,9 +34,9 @@ namespace DataCollect.Service.Provider
                             if (String.IsNullOrEmpty(colStr))
                             {
                                 readFullLine = false;
-                                break;
+                                break;              //没读到完整的一条，跳到下一行
                             }
-                            sheet.Columns.Add(new Column { Name = colStr });
+                            sheet.Columns.Add(new Column { Name = colStr,Position=i });
                         }
                         if (readFullLine)
                         {

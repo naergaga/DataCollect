@@ -24,7 +24,7 @@ namespace DataCollect.Web.Services.Action
         private ApplicationDbContext _context;
         private BookService bookService;
 
-        public ImportConfig Config = new ImportConfig { SkipAnyEmpty = false, TitleFirst = true };
+        public ImportConfig Config = new ImportConfig { SkipAnyEmpty = true, TitleFirst = true };
 
         public ImportAction(ApplicationDbContext context, BookService bookService)
         {

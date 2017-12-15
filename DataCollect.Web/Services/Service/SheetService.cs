@@ -19,12 +19,22 @@ namespace DataCollect.Service.Service
 
         public void FillRows(Sheet sheet)
         {
-            sheet.Rows = _context.Row.Include(t=>t.Data).Where(t => t.SheetId == sheet.Id).ToList();
+            sheet.Rows = _context.Row.Where(t => t.SheetId == sheet.Id).ToList();
+            sheet.Rows.ForEach(row =>
+            {
+                row.Data = (from cd in _context.ColumnData
+                           join c in _context.Column
+                           on cd.ColumnId equals c.Id
+                           where cd.RowId == row.Id
+                           orderby c.Position
+                           select cd).ToList();
+
+            });
         }
 
         public void FillCols(Sheet sheet)
         {
-            sheet.Columns = _context.Column.Where(c => c.SheetId == sheet.Id).ToList();
+            sheet.Columns = _context.Column.Where(c => c.SheetId == sheet.Id).OrderBy(t=>t.Position).ToList();
         }
 
         public List<Sheet> GetList()
