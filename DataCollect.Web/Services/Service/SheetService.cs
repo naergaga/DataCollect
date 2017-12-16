@@ -32,6 +32,11 @@ namespace DataCollect.Service.Service
             });
         }
 
+        public List<Column> GetColumns(int sheetId)
+        {
+            return _context.Column.Where(c => c.SheetId == sheetId).OrderBy(t => t.Position).ToList();
+        }
+
         public void FillRows(Sheet sheet)
         {
             sheet.Rows = _context.Row.Where(t => t.SheetId == sheet.Id).ToList();
