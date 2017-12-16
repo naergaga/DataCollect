@@ -2,11 +2,17 @@
 @using DataCollect.Web.Utities.ViewComponents
 @model CollectEvent
 
-<h4>当前用户: User1 任务: @Model.Name</h4>
+@if (User.Identity.Name==null)
+{
+    <div class="text-danger">
+        你需要登录，进行添加和上传
+    </div>
+}
+<h4>当前任务：@Model.Name</h4>
 <div>
     @foreach (var book in Model.Books)
     {
-        @(await Component.InvokeAsync<BookViewComponent>(book))
+        @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book=book,Edit=true}))
         <form method="post" enctype="multipart/form-data" asp-controller="Event" asp-action="DoFillIn" asp-route-id="@book.Id">
             <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="excelfile" type="file" /><button>上传</button>
         </form>

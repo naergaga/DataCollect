@@ -17,7 +17,7 @@
             @Html.DisplayFor(model => model.Book.Name)
         </dd>
     </dl>
-    @(await Component.InvokeAsync<BookViewComponent>(Model.Book))
+    @(await Component.InvokeAsync<BookViewComponent>(new BookModel {Book=Model.Book }))
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Book.Id">Edit</a> |

@@ -1,5 +1,4 @@
-﻿@page "{id}"
-@model DataCollect.Web.Pages.Event.ItemModel
+﻿@model DataCollect.Web.Pages.Event.ItemModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,12 +6,13 @@
 <h5>@Model.CollectEvent.Name</h5>
 
 <a asp-page="/Event/AddBook">添加工作簿</a>
+<a asp-page="/Event/AddBook">导出</a>
 
 <div>
     @foreach (var book in Model.CollectEvent.Books)
     {
         <div>
-            @(await Component.InvokeAsync<BookViewComponent>(book))
+            @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book,CanExport=true }))
         </div>
     }
 </div>

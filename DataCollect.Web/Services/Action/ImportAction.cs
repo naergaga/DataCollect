@@ -32,7 +32,7 @@ namespace DataCollect.Web.Services.Action
             this.bookService = bookService;
         }
 
-        public void Import(Stream stream, int bookId)
+        public void Import(Stream stream, int bookId,string userId)
         {
             var book = bookService.Get(bookId);
             var sheetIndex = 0;
@@ -47,7 +47,7 @@ namespace DataCollect.Web.Services.Action
                     while (reader.Read())// 表数据
                     {
                         var fullRow = true;
-                        Row row = new Row { SheetId = sheet.Id, Data = new List<ColumnData>() };
+                        Row row = new Row { SheetId = sheet.Id, Data = new List<ColumnData>(),UserId=userId };
                         for (int i = 0; i < colCount; i++) //行数据
                         {
                             var str = reader.GetValue(i)?.ToString();

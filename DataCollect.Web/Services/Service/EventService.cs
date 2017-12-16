@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,13 @@ namespace DataCollect.Service.Service
         public List<CollectEvent> GetList(bool published)
         {
             return _context.Event.Where(t => t.Published==published).ToList();
+        }
+
+        public CollectEvent Get(string name,string userId)
+        {
+            var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
+            FillEvent(collectEvent,userId);
+            return collectEvent;
         }
 
         public void CanelPublish(int id)
@@ -72,6 +80,19 @@ namespace DataCollect.Service.Service
         /// 为Event准备所有Book数据
         /// </summary>
         /// <param name="collectEvent"></param>
+        private void FillEvent(CollectEvent collectEvent,string userId)
+        {
+            collectEvent.Books = (from b in _context.Book
+                                  join eb in _context.EventBook
+                                  on b.Id equals eb.BookId
+                                  where eb.EventId == collectEvent.Id
+                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books.ForEach(book =>
+            {
+                bookService.FillSheetsData(book,userId);
+            });
+        }
+
         private void FillEvent(CollectEvent collectEvent)
         {
             collectEvent.Books = (from b in _context.Book

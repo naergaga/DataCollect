@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCollect.Web.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace DataCollect.Model
         public int Id { get; set; }
         [ForeignKey("Sheet")]
         public int SheetId { get; set; }
-        //public string UserId { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
 
         public Sheet Sheet { get; set; }
         public List<ColumnData> Data { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

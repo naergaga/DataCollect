@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using DataCollect.Web.Utities.ViewLocationExpanders;
 using DataCollect.Web.Services.Action;
 using DataCollect.Web.Services.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DataCollect.Web
 {
@@ -35,24 +36,37 @@ namespace DataCollect.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().AddRazorOptions(options=>
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("admin", policy => policy.Requirements.Add(new RoleAdmin()));
+            });
+
+            services.AddMvc()
+                .AddRazorOptions(options =>
             {
                 options.ViewLocationFormats.Add("/Pages/{1}/{0}.cshtml");
-                options.ViewLocationFormats.Add("/Pages/{1}/{0}.vbhtml");
                 options.ViewLocationFormats.Add("/Pages/{0}.cshtml");
-                options.ViewLocationFormats.Add("/Pages/{0}.vbhtml");
             }).AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
+                    //TODO: author page Role
                 });
 
+            services.AddTransient<RoleAdminHandler>();
             services.AddTransient<EventService>();
-            services.AddTransient<EventService>();
+            services.AddTransient<RowService>();
+            services.AddTransient<ExportAction>();
             services.AddTransient<ImportAction>();
             services.AddTransient<SheetService>();
             services.AddTransient<ColumnService>();
@@ -84,6 +98,28 @@ namespace DataCollect.Web
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+        }
+    }
+
+    internal class RoleAdmin : IAuthorizationRequirement
+    {
+    }
+
+    class RoleAdminHandler : AuthorizationHandler<RoleAdmin>
+    {
+        private UserManager<IdentityRole> userManager;
+
+        public RoleAdminHandler(UserManager<IdentityRole> roleManager) { this.userManager = roleManager; }
+
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleAdmin requirement)
+        {
+            var user = userManager.GetUserAsync(context.User);
+            var role = user.GetAwaiter().GetResult();
+             if (userManager.IsInRoleAsync(role, "admin").GetAwaiter().GetResult())
+            {
+                context.Succeed(requirement);
+            }
+            return Task.CompletedTask;
         }
     }
 }

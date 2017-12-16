@@ -7,16 +7,24 @@ using System.Threading.Tasks;
 
 namespace DataCollect.Web.Utities.ViewComponents
 {
-    public class BookViewComponent:ViewComponent
+    public class BookModel
+    {
+        public Book Book { get; set; }
+        public bool Edit { get; set; } = false;
+        public bool CanExport { get; set; } = true;
+    }
+
+
+    public class BookViewComponent : ViewComponent
     {
         public BookViewComponent()
         {
 
         }
 
-        public IViewComponentResult Invoke(Book book)
+        public IViewComponentResult Invoke(BookModel model)
         {
-            return View(book);
+            return View(model);
         }
     }
 }

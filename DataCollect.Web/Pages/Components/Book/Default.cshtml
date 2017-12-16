@@ -1,7 +1,16 @@
-﻿@model Book
+﻿@model BookModel
 
-<h5>@Model.Name</h5>
-@foreach (var sheet in Model.Sheets)
+@if (Model.CanExport) { 
+<div class="d-flex">
+    <div>工作薄:@Model.Book.Name</div>
+    <a asp-controller="Book" asp-action="Export" asp-route-id="@Model.Book.Id">导出</a>
+</div>
+}
+else
+{
+    <h5>@Model.Book.Name</h5>
+}
+@foreach (var sheet in Model.Book.Sheets)
 {
     <h5>@sheet.Name</h5>
     @*<ul class="sheet-item d-flex">
@@ -14,7 +23,11 @@
         <tr>
             @foreach (var col in sheet.Columns)
             {
-                <td>@col.Name</td>
+                <th>@col.Name</th>
+            }
+            @if (Model.Edit)
+            {
+                <th></th>
             }
         </tr>
         @if (sheet.Rows != null)
@@ -26,9 +39,12 @@
                     {
                         <td>@data.Value</td>
                     }
+                    @if (Model.Edit)
+                    {
+                        <td><a asp-controller="Event" asp-action="RemoveRow" asp-route-id="@row.Id">删除</a></td>
+                    }
                 </tr>
             }
         }
     </table>
-
 }

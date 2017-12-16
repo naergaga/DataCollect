@@ -16,7 +16,7 @@ namespace DataCollect.Service.Service
         private ColumnService columnService;
         private SheetService _sheetService;
 
-        public BookService(ApplicationDbContext context, ColumnService columnService,SheetService sheetService)
+        public BookService(ApplicationDbContext context, ColumnService columnService, SheetService sheetService)
         {
             _context = context;
             this.columnService = columnService;
@@ -40,6 +40,14 @@ namespace DataCollect.Service.Service
             return book;
         }
 
+        public Book GetWithData(int id)
+        {
+            var book = _context.Book.Include(b => b.Sheets).SingleOrDefault(t => t.Id == id);
+
+            FillSheetsData(book);
+            return book;
+        }
+
         /// <summary>
         /// 获取book结构
         /// </summary>
@@ -47,7 +55,7 @@ namespace DataCollect.Service.Service
         /// <returns></returns>
         public Book Get(string name)
         {
-            var book = _context.Book.Include(b=>b.Sheets).SingleOrDefault(t => t.Name == name);
+            var book = _context.Book.Include(b => b.Sheets).SingleOrDefault(t => t.Name == name);
 
             FillSheets(book);
             return book;
@@ -70,6 +78,15 @@ namespace DataCollect.Service.Service
         /// 填充列名，数据
         /// </summary>
         /// <param name="book"></param>
+        public void FillSheetsData(Book book, string userId)
+        {
+            book.Sheets.ForEach(sheet =>
+            {
+                _sheetService.FillRows(sheet, userId);
+                _sheetService.FillCols(sheet);
+            });
+        }
+
         public void FillSheetsData(Book book)
         {
             book.Sheets.ForEach(sheet =>

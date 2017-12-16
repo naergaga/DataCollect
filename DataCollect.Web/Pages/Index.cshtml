@@ -10,7 +10,7 @@
     <ul>
         @foreach (var item in Model.EventList)
         {
-            <li><a asp-page="/Event/Index" asp-route-id="@item.Id">@item.Name</a></li>
+            <li><a asp-controller="Event" asp-action="Index">@item.Name</a></li>
         }
     </ul>
     <div>数据库设计</div>

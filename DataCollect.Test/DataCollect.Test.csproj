@@ -205,6 +205,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\UserTest.cs" />
     <Compile Include="Providers\DbContextProvider.cs" />
     <Compile Include="Services\Provider\BookProviderTest.cs" />
     <Compile Include="Services\Service\BookServiceTest.cs" />

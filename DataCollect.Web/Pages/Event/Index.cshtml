@@ -1,35 +1,51 @@
 ﻿@page
 @model DataCollect.Web.Pages.Event.IndexModel
+@inject UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "Index";
+    var user = await userManager.GetUserAsync(User);
+    var isAdmin = user == null ? false : await userManager.IsInRoleAsync(user, "admin");
 }
 
 <div>
     <a asp-page="/Event/Create">添加任务</a>
 </div>
-<h4>未发布</h4>
-<div class="plain-list">
-    @foreach (var item in Model.UnPublishedEventList)
-    {
-        <div class="p-item">
-            <div><a asp-page="/Event/Item" asp-route-id="@item.Id">@item.Name</a></div>
-            <div>
-                <a asp-controller="Event" asp-action="Publish" asp-route-id="@item.Id">发布</a>
-                <a asp-page="/Event/Remove">删除</a>
+@if (isAdmin)
+{
+    <h4>未发布</h4>
+    <div class="plain-list">
+        @foreach (var item in Model.UnPublishedEventList)
+        {
+            <div class="p-item">
+                <div><a asp-page="/Event/Item" asp-route-id="@item.Id">@item.Name</a></div>
+                <div>
+                    <a asp-controller="Event" asp-action="Publish" asp-route-id="@item.Id">发布</a>
+                    <a asp-page="/Event/Remove">删除</a>
+                </div>
             </div>
-        </div>
-    }
-</div>
-
+        }
+    </div>
+}
 <h4>已发布</h4>
 <div class="plain-list">
     @foreach (var item in Model.PublishedEventList)
     {
         <div class="p-item">
-            <div><a asp-page="/Event/Item" asp-route-id="@item.Id">@item.Name</a></div>
+
             <div>
-                <a asp-controller="Event" asp-action="CancelPublish" asp-route-id="@item.Id">取消发布</a>
-                <a asp-page="/Event/Remove">删除</a>
+                @if (isAdmin)
+                {
+                    <a asp-controller="Event" asp-action="Item" asp-route-id="@item.Id">@item.Name</a>}
+                else
+                {
+                    @item.Name}
+            </div>
+            <div>
+                @if (isAdmin)
+                {
+                    <a asp-controller="Event" asp-action="CancelPublish" asp-route-id="@item.Id">取消发布</a>
+                    <a asp-page="/Event/Remove">删除</a>
+                }
                 <a asp-controller="Event" asp-action="FillIn" asp-route-id="" asp-route-eventName="@item.Name">数据填写</a>
             </div>
         </div>

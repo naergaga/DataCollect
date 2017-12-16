@@ -6,23 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataCollect.Service.Service;
 using DataCollect.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DataCollect.Web.Pages.Event
 {
-    public class ItemModel : PageModel
+    public class ItemModel 
     {
-        private EventService eventService;
-
         public CollectEvent CollectEvent { get; set; }
-
-        public ItemModel(EventService eventService)
-        {
-            this.eventService = eventService;
-        }
-
-        public void OnGet(int id)
-        {
-            this.CollectEvent=eventService.Get(id);
-        }
     }
 }
