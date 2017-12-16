@@ -48,7 +48,7 @@ namespace DataCollect.Web
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("admin", policy => policy.Requirements.Add(new RoleAdmin()));
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("admin"));
             });
 
             services.AddMvc()
@@ -60,10 +60,10 @@ namespace DataCollect.Web
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
-                    //TODO: author page Role
+                    options.Conventions.AuthorizeFolder("/Event", "RequireAdmin");
+                    options.Conventions.AuthorizeFolder("/Books", "RequireAdmin");
                 });
 
-            services.AddTransient<RoleAdminHandler>();
             services.AddTransient<EventService>();
             services.AddTransient<RowService>();
             services.AddTransient<ExportAction>();
@@ -98,28 +98,6 @@ namespace DataCollect.Web
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-        }
-    }
-
-    internal class RoleAdmin : IAuthorizationRequirement
-    {
-    }
-
-    class RoleAdminHandler : AuthorizationHandler<RoleAdmin>
-    {
-        private UserManager<IdentityRole> userManager;
-
-        public RoleAdminHandler(UserManager<IdentityRole> roleManager) { this.userManager = roleManager; }
-
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleAdmin requirement)
-        {
-            var user = userManager.GetUserAsync(context.User);
-            var role = user.GetAwaiter().GetResult();
-             if (userManager.IsInRoleAsync(role, "admin").GetAwaiter().GetResult())
-            {
-                context.Succeed(requirement);
-            }
-            return Task.CompletedTask;
         }
     }
 }

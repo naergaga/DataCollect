@@ -1,18 +1,39 @@
 ﻿@page
 @model IndexModel
+@inject UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "Home page";
+    var user = await userManager.GetUserAsync(User);
+    if (user == null) { ViewBag.IsAdmin = false; }
+    else { ViewBag.IsAdmin = await userManager.IsInRoleAsync(user, "admin"); }
 }
 
 
 <div>
     <div>当前收集任务：</div>
     <ul>
-        @foreach (var item in Model.EventList)
+        @if (ViewBag.isAdmin)
         {
-            <li><a asp-controller="Event" asp-action="Index">@item.Name</a></li>
+            @foreach (var item in Model.EventList)
+            {
+                <li><a asp-controller="Event" asp-action="Index">@item.Name</a></li>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.EventList)
+            {
+                <li><a asp-controller="Event" asp-action="FillIn" asp-route-eventName="@item.Name">@item.Name</a></li>
+            }
         }
     </ul>
-    <div>数据库设计</div>
+    <div>
+        <h5>数据库设计</h5>
+        <ul>
+            <li>发布的状态 确实的体现</li>
+            <li>分页</li>
+            <li class=""><del>为用户明确 单独的UI</del></li>
+        </ul>
+    </div>
     <img class="img-responsive" src="~/images/数据库.png" />
 </div>

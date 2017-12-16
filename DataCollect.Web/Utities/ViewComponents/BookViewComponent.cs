@@ -11,7 +11,7 @@ namespace DataCollect.Web.Utities.ViewComponents
     {
         public Book Book { get; set; }
         public bool Edit { get; set; } = false;
-        public bool CanExport { get; set; } = true;
+        public bool CanExport { get; set; } = false;
     }
 
 
