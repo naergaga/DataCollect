@@ -1,6 +1,9 @@
 ﻿@using DataCollect.Web.Data.ViewModels.Event
 @using DataCollect.Web.Utities.ViewComponents
 @model CollectEvent
+@{
+    ViewBag.Title = Model.Name;
+}
 
 @if (User.Identity.Name==null)
 {

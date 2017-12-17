@@ -2,7 +2,7 @@
 @model IndexModel
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "主页";
     var user = await userManager.GetUserAsync(User);
     if (user == null) { ViewBag.IsAdmin = false; }
     else { ViewBag.IsAdmin = await userManager.IsInRoleAsync(user, "admin"); }

@@ -2,7 +2,7 @@
 @model DataCollect.Web.Pages.Event.IndexModel
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "任务";
     var user = await userManager.GetUserAsync(User);
     var isAdmin = user == null ? false : await userManager.IsInRoleAsync(user, "admin");
 }
