@@ -1,0 +1,33 @@
+﻿@page "{id}"
+@model DataCollect.Web.Pages.Event.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>删除 @Model.CollectEvent.Name</h3>
+
+<h4>你要删除这个任务吗？数据将会删除！</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectEvent.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CollectEvent.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectEvent.Published)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CollectEvent.Published)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="CollectEvent.Id" />
+        <input type="submit" value="删除" class="btn btn-default" /> |
+        <a asp-page="./Index">返回任务主页</a>
+    </form>
+</div>

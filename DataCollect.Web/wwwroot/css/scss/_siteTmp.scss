@@ -42,10 +42,6 @@
     display: flex;
 }
 
-.plain-list > .item > div {
-    /*flex:1;*/
-}
-
 .plain-list > .p-item > div:nth-child(2) {
     margin-left: 2rem;
 }
@@ -56,4 +52,8 @@
 
 .d-none {
     display:none;
+}
+
+.p-item>div:nth-child(1){
+    width:10rem;
 }

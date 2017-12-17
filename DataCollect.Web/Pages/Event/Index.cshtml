@@ -20,7 +20,8 @@
                 <div><a asp-page="/Event/Item" asp-route-id="@item.Id">@item.Name</a></div>
                 <div>
                     <a asp-controller="Event" asp-action="Publish" asp-route-id="@item.Id">发布</a>
-                    <a asp-page="/Event/Remove">删除</a>
+                    <a asp-page="/Event/Delete" asp-route-id="@item.Id">删除</a>
+                    <a asp-page="/Event/Edit" asp-route-id="@item.Id">修改</a>
                 </div>
             </div>
         }
@@ -42,10 +43,11 @@
             </div>
             <div>
                 @if (isAdmin)
-                {
-                    <a asp-controller="Event" asp-action="CancelPublish" asp-route-id="@item.Id">取消发布</a>
-                    <a asp-page="/Event/Remove">删除</a>
-                }
+    {
+            <a asp-controller="Event" asp-action="CancelPublish" asp-route-id="@item.Id">取消发布</a>
+            <a asp-page="/Event/Delete" asp-route-id="@item.Id">删除</a>
+            <a asp-page="/Event/Edit" asp-route-id="@item.Id">修改</a>
+}
                 <a asp-controller="Event" asp-action="FillIn" asp-route-id="" asp-route-eventName="@item.Name">数据填写</a>
             </div>
         </div>

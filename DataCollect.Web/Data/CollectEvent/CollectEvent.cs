@@ -14,6 +14,7 @@ namespace DataCollect.Model
         [DisplayName("名称")]
         public string Name { get; set; }
         [DefaultValue(false)]
+        [DisplayName("发布")]
         public bool Published { get; set; }
 
         public virtual List<Book> Books { get; set; }
