@@ -52,6 +52,11 @@ namespace DataCollect.Service.Service
             _context.SaveChanges();
         }
 
+        public bool EventPublished(string eventName)
+        {
+            return _context.Event.Any(t => t.Published && t.Name == eventName);
+        }
+
         /// <summary>
         /// Get Full Data
         /// </summary>

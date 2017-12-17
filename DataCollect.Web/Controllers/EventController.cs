@@ -43,7 +43,7 @@ namespace DataCollect.Web.Controllers
         public IActionResult CancelPublish(int id,
             [FromServices]EventService eventService)
         {
-            eventService.Publish(id);
+            eventService.CanelPublish(id);
             return RedirectToPage("/Event/Index");
         }
 
@@ -53,8 +53,9 @@ namespace DataCollect.Web.Controllers
             [FromServices]UserManager<ApplicationUser> userManager,
             [FromServices]EventService eventService)
         {
+            if (!eventService.EventPublished(eventName)) { return NotFound(); }
             CollectEvent e1 = eventService.Get(eventName, userManager.GetUserId(User));
-            return View("/Pages/Event/AddData.cshtml", e1);
+            return View("AddData", e1);
         }
 
         [HttpPost("/e/{eventName}/add/{id}")]
