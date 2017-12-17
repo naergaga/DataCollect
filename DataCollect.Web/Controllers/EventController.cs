@@ -14,6 +14,7 @@ using DataCollect.Web.Data;
 using DataCollect.Web.Services.Service;
 using Microsoft.AspNetCore.Authorization;
 using DataCollect.Web.Pages.Event;
+using DataCollect.Web.Utities.Option;
 
 namespace DataCollect.Web.Controllers
 {
@@ -24,10 +25,10 @@ namespace DataCollect.Web.Controllers
         {
         }
 
-
-        public IActionResult Item(int id, [FromServices]EventService eventService)
+        [HttpGet]
+        public IActionResult Item(int id, [FromServices]EventService eventService,int page=1)
         {
-            var model = new ItemModel { CollectEvent = eventService.Get(id) };
+            var model = new ItemModel { CollectEvent = eventService.Get(id,new PageOption { Page=page,Size=20}) };
             return View(model);
         }
 

@@ -1,5 +1,6 @@
 ﻿using DataCollect.Model;
 using DataCollect.Web.Data;
+using DataCollect.Web.Utities.Option;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,33 +18,26 @@ namespace DataCollect.Service.Service
         private readonly BookService bookService;
 
         public EventService(ApplicationDbContext context,
-            SheetService sheetService,BookService bookService)
+            SheetService sheetService, BookService bookService)
         {
             _context = context;
             _sheetService = sheetService;
             this.bookService = bookService;
         }
 
-        public void Publish(int id)
+        #region GetList
+        public List<CollectEvent> GetList()
         {
-            var event1 = _context.Event.SingleOrDefault(t=>t.Id == id);
-            event1.Published = true;
-            _context.Update(event1);
-            _context.SaveChanges();
+            return _context.Event.ToList();
         }
 
         public List<CollectEvent> GetList(bool published)
         {
-            return _context.Event.Where(t => t.Published==published).ToList();
+            return _context.Event.Where(t => t.Published == published).ToList();
         }
+        #endregion
 
-        public CollectEvent Get(string name,string userId)
-        {
-            var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
-            FillEvent(collectEvent,userId);
-            return collectEvent;
-        }
-
+        #region publish
         public void CanelPublish(int id)
         {
             var event1 = _context.Event.SingleOrDefault(t => t.Id == id);
@@ -52,9 +46,27 @@ namespace DataCollect.Service.Service
             _context.SaveChanges();
         }
 
+        public void Publish(int id)
+        {
+            var event1 = _context.Event.SingleOrDefault(t => t.Id == id);
+            event1.Published = true;
+            _context.Update(event1);
+            _context.SaveChanges();
+        }
+
         public bool EventPublished(string eventName)
         {
             return _context.Event.Any(t => t.Published && t.Name == eventName);
+        }
+        #endregion
+
+        #region Get Method
+
+        public CollectEvent Get(string name, string userId)
+        {
+            var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
+            FillEvent(collectEvent, userId);
+            return collectEvent;
         }
 
         /// <summary>
@@ -81,11 +93,18 @@ namespace DataCollect.Service.Service
             return collectEvent;
         }
 
-        /// <summary>
-        /// 为Event准备所有Book数据
-        /// </summary>
-        /// <param name="collectEvent"></param>
-        private void FillEvent(CollectEvent collectEvent,string userId)
+        public CollectEvent Get(int id ,PageOption option)
+        {
+            var collectEvent = _context.Event.SingleOrDefault(t => t.Id == id);
+
+            FillEvent(collectEvent,option);
+            return collectEvent;
+        }
+        #endregion
+
+        #region FillEvent
+
+        private void FillEvent(CollectEvent collectEvent, PageOption option)
         {
             collectEvent.Books = (from b in _context.Book
                                   join eb in _context.EventBook
@@ -94,7 +113,24 @@ namespace DataCollect.Service.Service
                                   select b).Include(t => t.Sheets).ToList();
             collectEvent.Books.ForEach(book =>
             {
-                bookService.FillSheetsData(book,userId);
+                bookService.FillSheetsData(book,option);
+            });
+        }
+
+        /// <summary>
+        /// 为Event准备所有Book数据
+        /// </summary>
+        /// <param name="collectEvent"></param>
+        private void FillEvent(CollectEvent collectEvent, string userId)
+        {
+            collectEvent.Books = (from b in _context.Book
+                                  join eb in _context.EventBook
+                                  on b.Id equals eb.BookId
+                                  where eb.EventId == collectEvent.Id
+                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books.ForEach(book =>
+            {
+                bookService.FillSheetsData(book, userId);
             });
         }
 
@@ -110,10 +146,6 @@ namespace DataCollect.Service.Service
                 bookService.FillSheetsData(book);
             });
         }
-
-        public List<CollectEvent> GetList()
-        {
-            return _context.Event.ToList();
-        }
+        #endregion
     }
 }

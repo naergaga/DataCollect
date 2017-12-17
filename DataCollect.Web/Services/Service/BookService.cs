@@ -1,6 +1,7 @@
 ﻿using DataCollect.Model;
 using DataCollect.Web.Data;
 using DataCollect.Web.Services.Service;
+using DataCollect.Web.Utities.Option;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -92,6 +93,15 @@ namespace DataCollect.Service.Service
             book.Sheets.ForEach(sheet =>
             {
                 _sheetService.FillRows(sheet);
+                _sheetService.FillCols(sheet);
+            });
+        }
+
+        public void FillSheetsData(Book book, PageOption option)
+        {
+            book.Sheets.ForEach(sheet =>
+            {
+                _sheetService.FillRows(sheet,option);
                 _sheetService.FillCols(sheet);
             });
         }

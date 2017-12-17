@@ -1,5 +1,6 @@
 ﻿using DataCollect.Model;
 using DataCollect.Web.Data;
+using DataCollect.Web.Utities.Option;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,26 @@ namespace DataCollect.Service.Service
         public List<Sheet> GetList()
         {
             return _context.Sheet.ToList();
+        }
+
+        public void FillRows(Sheet sheet, PageOption option)
+        {
+            var skipNum = option.Size * (option.Page - 1);
+            var query = _context.Row.Where(t => t.SheetId == sheet.Id);
+
+            option.Count = query.Count();
+            sheet.Rows = query.Skip(skipNum).Take(option.Size).ToList();
+
+            sheet.Rows.ForEach(row =>
+            {
+                row.Data = (from cd in _context.ColumnData
+                            join c in _context.Column
+                            on cd.ColumnId equals c.Id
+                            where cd.RowId == row.Id
+                            orderby c.Position
+                            select cd).ToList();
+
+            });
         }
     }
 }
