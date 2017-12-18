@@ -1,0 +1,35 @@
+﻿@using DataCollect.Web.Utities.Option
+@model PageOptionModel
+
+@{
+    var linkSize = 10;
+    var totalPage = (int)Math.Ceiling((Model.Option.Count / (double)Model.Option.Size));
+    var n1 = (Model.Option.Page - 1) / linkSize;
+    var startPage = n1 * linkSize + 1;
+    var endPage = (n1 + 1) * linkSize;
+    endPage = endPage > totalPage ? totalPage : endPage;
+    //
+    var lastPageLinkEnable = startPage > 10;
+    var nextPageLinkEnable = endPage < totalPage;
+}
+<ul class="pagination">
+    <li>
+        @if (lastPageLinkEnable)
+        {
+            <a asp-all-route-data="Model.Routes" asp-route-p="@(startPage-1)">上一页</a>}
+        else
+        {
+            <a>上一页</a>}
+    </li>
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <li><a asp-all-route-data="Model.Routes" asp-route-p="@i">@i</a></li>
+    }
+    @if (nextPageLinkEnable)
+    {
+        <li><a asp-controller="Event" asp-action="FillIn" asp-all-route-data="Model.Routes" asp-route-p="@(endPage+1)">下一页</a></li>}
+    else
+    {
+        <li><a>下一页</a></li>
+    }
+</ul>

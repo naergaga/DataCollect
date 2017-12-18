@@ -12,9 +12,10 @@
     @foreach (var book in Model.CollectEvent.Books)
     {
         <div>
-            @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book,CanExport=true }))
+            @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book, CanExport = true }))
         </div>
     }
+    @(await Component.InvokeAsync<PageViewComponent>(new PageOptionModel {Option=Model.PageOption }))
 </div>
 
 @*@section Scripts {

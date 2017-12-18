@@ -65,8 +65,14 @@ namespace DataCollect.Service.Service
 
         public void FillRows(Sheet sheet, PageOption option)
         {
-            var skipNum = option.Size * (option.Page - 1);
             var query = _context.Row.Where(t => t.SheetId == sheet.Id);
+
+            FillRowsWithQuery(sheet, option, query);
+        }
+
+        public void FillRowsWithQuery(Sheet sheet, PageOption option,IEnumerable<Row> query)
+        {
+            var skipNum = option.Size * (option.Page - 1);
 
             option.Count = query.Count();
             sheet.Rows = query.Skip(skipNum).Take(option.Size).ToList();
@@ -81,6 +87,13 @@ namespace DataCollect.Service.Service
                             select cd).ToList();
 
             });
+        }
+
+        public void FillRows(Sheet sheet, string userId, PageOption option)
+        {
+            var query = _context.Row.Where(t => t.SheetId == sheet.Id && userId==t.UserId);
+
+            FillRowsWithQuery(sheet, option, query);
         }
     }
 }

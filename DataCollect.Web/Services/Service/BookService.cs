@@ -105,5 +105,14 @@ namespace DataCollect.Service.Service
                 _sheetService.FillCols(sheet);
             });
         }
+
+        public void FillSheetsData(Book book, string userId, PageOption option)
+        {
+            book.Sheets.ForEach(sheet =>
+            {
+                _sheetService.FillRows(sheet,userId, option);
+                _sheetService.FillCols(sheet);
+            });
+        }
     }
 }

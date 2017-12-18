@@ -69,6 +69,13 @@ namespace DataCollect.Service.Service
             return collectEvent;
         }
 
+        public CollectEvent Get(string name, string userId,PageOption option)
+        {
+            var collectEvent = _context.Event.SingleOrDefault(t => t.Name == name);
+            FillEvent(collectEvent, userId,option);
+            return collectEvent;
+        }
+
         /// <summary>
         /// Get Full Data
         /// </summary>
@@ -114,6 +121,21 @@ namespace DataCollect.Service.Service
             collectEvent.Books.ForEach(book =>
             {
                 bookService.FillSheetsData(book,option);
+            });
+        }
+
+
+
+        private void FillEvent(CollectEvent collectEvent, string userId, PageOption option)
+        {
+            collectEvent.Books = (from b in _context.Book
+                                  join eb in _context.EventBook
+                                  on b.Id equals eb.BookId
+                                  where eb.EventId == collectEvent.Id
+                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books.ForEach(book =>
+            {
+                bookService.FillSheetsData(book, userId,option);
             });
         }
 

@@ -26,9 +26,15 @@ namespace DataCollect.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Item(int id, [FromServices]EventService eventService,int page=1)
+        public IActionResult Item(int id, [FromServices]EventService eventService, int p = 1)
         {
-            var model = new ItemModel { CollectEvent = eventService.Get(id,new PageOption { Page=page,Size=20}) };
+            //
+            var option = new PageOption { Page = p, Size = 20 };
+            var model = new ItemModel
+            {
+                CollectEvent = eventService.Get(id, option),
+                PageOption = option
+            };
             return View(model);
         }
 
@@ -39,8 +45,8 @@ namespace DataCollect.Web.Controllers
             eventService.Publish(id);
             return RedirectToPage("/Event/Index");
         }
-        
-        [Authorize(Roles="admin")]
+
+        [Authorize(Roles = "admin")]
         public IActionResult CancelPublish(int id,
             [FromServices]EventService eventService)
         {
@@ -52,22 +58,24 @@ namespace DataCollect.Web.Controllers
         [HttpGet("/e/{eventName}")]
         public IActionResult FillIn(string eventName,
             [FromServices]UserManager<ApplicationUser> userManager,
-            [FromServices]EventService eventService)
+            [FromServices]EventService eventService,int? p)
         {
             if (!eventService.EventPublished(eventName)) { return NotFound(); }
-            CollectEvent e1 = eventService.Get(eventName, userManager.GetUserId(User));
+            var pageOption = new PageOption { Page = p ?? 1,Size=20 };
+            CollectEvent e1 = eventService.Get(eventName, userManager.GetUserId(User), pageOption);
+            ViewBag.PageOption = pageOption;
             return View("AddData", e1);
         }
 
         [HttpPost("/e/{eventName}/add/{id}")]
-        public IActionResult DoFillIn(int id,string eventName, IFormFile excelfile,
+        public IActionResult DoFillIn(int id, string eventName, IFormFile excelfile,
             [FromServices]UserManager<ApplicationUser> userManager,
             [FromServices]ImportAction action)
         {
             var userId = userManager.GetUserId(User);
             if (userId == null) return NotFound();
-            action.Import(excelfile.OpenReadStream(),id, userId);
-            return new RedirectToActionResult("FillIn", "Event", new {  eventName });
+            action.Import(excelfile.OpenReadStream(), id, userId);
+            return new RedirectToActionResult("FillIn", "Event", new { eventName });
         }
 
         [HttpGet("/e/{eventName}/removeRow/{id}")]
