@@ -108,11 +108,15 @@ namespace DataCollect.Service.Service
 
         public void FillSheetsData(Book book, string userId, PageOption option)
         {
+            var maxCount = option.Count;
             book.Sheets.ForEach(sheet =>
             {
                 _sheetService.FillRows(sheet,userId, option);
                 _sheetService.FillCols(sheet);
+
+                if (option.Count > maxCount) { maxCount = option.Count; }
             });
+            option.Count = maxCount;
         }
     }
 }

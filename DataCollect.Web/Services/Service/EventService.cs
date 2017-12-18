@@ -113,30 +113,41 @@ namespace DataCollect.Service.Service
 
         private void FillEvent(CollectEvent collectEvent, PageOption option)
         {
-            collectEvent.Books = (from b in _context.Book
-                                  join eb in _context.EventBook
-                                  on b.Id equals eb.BookId
-                                  where eb.EventId == collectEvent.Id
-                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books = GetEventBook(collectEvent.Id);
+            var maxCount = option.Count;
             collectEvent.Books.ForEach(book =>
             {
                 bookService.FillSheetsData(book,option);
+                if (option.Count > maxCount)
+                {
+                    maxCount = option.Count;
+                }
             });
+            option.Count = maxCount;
         }
 
-
+        public List<Book> GetEventBook(int id)
+        {
+            return (from b in _context.Book
+                    join eb in _context.EventBook
+                    on b.Id equals eb.BookId
+                    where eb.EventId == id
+                    select b).Include(t => t.Sheets).ToList();
+        }
 
         private void FillEvent(CollectEvent collectEvent, string userId, PageOption option)
         {
-            collectEvent.Books = (from b in _context.Book
-                                  join eb in _context.EventBook
-                                  on b.Id equals eb.BookId
-                                  where eb.EventId == collectEvent.Id
-                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books = GetEventBook(collectEvent.Id);
+            var maxCount = option.Count;
             collectEvent.Books.ForEach(book =>
             {
-                bookService.FillSheetsData(book, userId,option);
+                bookService.FillSheetsData(book, userId, option);
+                if (option.Count > maxCount)
+                {
+                    maxCount = option.Count;
+                }
             });
+            option.Count = maxCount;
         }
 
         /// <summary>
@@ -145,11 +156,7 @@ namespace DataCollect.Service.Service
         /// <param name="collectEvent"></param>
         private void FillEvent(CollectEvent collectEvent, string userId)
         {
-            collectEvent.Books = (from b in _context.Book
-                                  join eb in _context.EventBook
-                                  on b.Id equals eb.BookId
-                                  where eb.EventId == collectEvent.Id
-                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books = GetEventBook(collectEvent.Id);
             collectEvent.Books.ForEach(book =>
             {
                 bookService.FillSheetsData(book, userId);
@@ -158,11 +165,7 @@ namespace DataCollect.Service.Service
 
         private void FillEvent(CollectEvent collectEvent)
         {
-            collectEvent.Books = (from b in _context.Book
-                                  join eb in _context.EventBook
-                                  on b.Id equals eb.BookId
-                                  where eb.EventId == collectEvent.Id
-                                  select b).Include(t => t.Sheets).ToList();
+            collectEvent.Books = GetEventBook(collectEvent.Id);
             collectEvent.Books.ForEach(book =>
             {
                 bookService.FillSheetsData(book);
