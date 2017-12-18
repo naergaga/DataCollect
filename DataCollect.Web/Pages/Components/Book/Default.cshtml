@@ -42,7 +42,10 @@ else
                     }
                     @if (Model.Edit)
                     {
-                        <td><a asp-controller="Event" asp-action="RemoveRow" asp-route-id="@row.Id">删除</a></td>
+                        <td>
+                    @*<a asp-controller="Event" asp-action="RemoveRow" asp-route-id="@row.Id">删除</a>*@
+                            <button data-link="@Url.Action("RemoveRow","EventAction",new { id=row.Id})" class="btnDeleteRow">删除</button>
+                        </td>
                     }
                 </tr>
             }
@@ -54,8 +57,10 @@ else
             @for (int i = 0; i < sheet.Columns.Count; i++)
             {
                 var col = sheet.Columns[i];
+            <div>
                 <label>@col.Name</label>
                 <input name="rowData[@i]" type="text" />
+            </div>
             }
             <button type="submit">添加</button>
         </form>}

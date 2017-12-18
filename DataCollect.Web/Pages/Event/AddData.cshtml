@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Name;
 }
 
-@if (User.Identity.Name==null)
+@if (User.Identity.Name == null)
 {
     <div class="text-danger">
         你需要登录，进行添加和上传
@@ -16,10 +16,17 @@
     {
         @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book, Edit = true }))
         <form method="post" enctype="multipart/form-data" asp-controller="Event" asp-action="DoFillIn" asp-route-id="@book.Id">
-            <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="excelfile" type="file" /><button>上传</button>
+            <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="excelfile" type="file" /><button type="submit">上传</button>
         </form>
     }
-    @(await Component.InvokeAsync<PageViewComponent>(new PageOptionModel {
-    Option = ViewBag.PageOption,
-    Routes = new Dictionary<string, string> { { "eventName",Model.Name} }}))
+    @(await Component.InvokeAsync<PageViewComponent>(new PageOptionModel
+        {
+            Option = ViewBag.PageOption,
+            Routes = new Dictionary<string, string> { { "eventName", Model.Name } }
+        }))
 </div>
+
+@section Scripts {
+    @*<script src="~/lib/axios/axios.js"></script>*@
+    <script src="~/js/handle-action.js" asp-append-version="true"></script>
+}

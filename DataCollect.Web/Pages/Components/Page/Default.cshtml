@@ -1,6 +1,5 @@
 ﻿@using DataCollect.Web.Utities.Option
 @model PageOptionModel
-
 @{
     var linkSize = 10;
     var totalPage = (int)Math.Ceiling((Model.Option.Count / (double)Model.Option.Size));
@@ -12,6 +11,7 @@
     var lastPageLinkEnable = startPage > 10;
     var nextPageLinkEnable = endPage < totalPage;
 }
+@if (totalPage <= 1) { return; }
 <ul class="pagination">
     <li>
         @if (lastPageLinkEnable)

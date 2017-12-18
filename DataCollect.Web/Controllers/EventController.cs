@@ -74,21 +74,27 @@ namespace DataCollect.Web.Controllers
         {
             var userId = userManager.GetUserId(User);
             if (userId == null) return NotFound();
+            try { 
             action.Import(excelfile.OpenReadStream(), id, userId);
-            return new RedirectToActionResult("FillIn", "Event", new { eventName });
+            }
+            catch
+            {
+                
+            }
+            return RedirectToAction("FillIn", "Event", new { eventName });
         }
 
-        [HttpGet("/e/{eventName}/removeRow/{id}")]
-        public IActionResult RemoveRow(int id, string eventName, IFormFile excelfile,
-            [FromServices]ApplicationDbContext context,
-            [FromServices]RowService rowService,
-            [FromServices]UserManager<ApplicationUser> userManager)
-        {
-            var userId = userManager.GetUserId(User);
-            var row = context.Row.SingleOrDefault(t => t.Id == id && t.UserId == userId);
-            if (row == null) return NotFound();
-            rowService.Remove(row);
-            return new RedirectToActionResult("FillIn", "Event", new { eventName });
-        }
+        //[HttpGet("/e/{eventName}/removeRow/{id}")]
+        //public IActionResult RemoveRow(int id, string eventName, IFormFile excelfile,
+        //    [FromServices]ApplicationDbContext context,
+        //    [FromServices]RowService rowService,
+        //    [FromServices]UserManager<ApplicationUser> userManager)
+        //{
+        //    var userId = userManager.GetUserId(User);
+        //    var row = context.Row.SingleOrDefault(t => t.Id == id && t.UserId == userId);
+        //    if (row == null) return NotFound();
+        //    rowService.Remove(row);
+        //    return new RedirectToActionResult("FillIn", "Event", new { eventName });
+        //}
     }
 }
