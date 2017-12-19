@@ -5,6 +5,7 @@
 
 <h5>@Model.CollectEvent.Name</h5>
 
+<a asp-controller="Event" asp-action="FillIn" asp-route-id="" asp-route-eventName="@Model.CollectEvent.Name">数据填写</a>
 <a asp-page="/Event/AddBook">管理工作簿</a>
 
 @foreach (var book in Model.CollectEvent.Books)

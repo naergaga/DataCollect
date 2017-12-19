@@ -10,13 +10,14 @@
 
 
 <div>
+    <a  asp-controller="Event" asp-action="Index">管理任务</a>
     <div>当前收集任务：</div>
     <ul>
         @if (ViewBag.isAdmin)
         {
             @foreach (var item in Model.EventList)
             {
-                <li><a asp-controller="Event" asp-action="Index">@item.Name</a></li>
+                <li><a asp-controller="Event" asp-action="Item" asp-route-id="@item.Id">@item.Name</a></li>
             }
         }
         else
