@@ -14,25 +14,41 @@ namespace DataCollect.Web.Pages.Event
     {
         public List<Book> BookList { get; set; }
         public CollectEvent Event { get; set; }
+        public List<int> BookIdList { get; set; }
 
         public void OnGet(
             int id,
             [FromServices]ApplicationDbContext context,
+            [FromServices]EventService eventService,
             [FromServices]BookService bookService)
         {
             Event = context.Event.SingleOrDefault(t => t.Id == id);
             BookList = bookService.GetList();
+            BookIdList = eventService.GetBookIdList(id);
         }
 
         public async Task<IActionResult> OnPostAsync(int id, List<int> books,
-            [FromServices]ApplicationDbContext context)
+            [FromServices]ApplicationDbContext context,
+            [FromServices]EventService eventService)
         {
-            foreach (var bookId in books)
+            var bookIdList = eventService.GetBookIdList(id);
+
+            //remove
+            var booksRemove = bookIdList.Except(books);
+            foreach (var bookId in booksRemove)
+            {
+                var item = context.EventBook.Single(t => t.BookId == bookId && t.EventId == id);
+                context.EventBook.Remove(item);
+            }
+            //add
+            var booksAdd = books.Except(bookIdList);
+
+            foreach (var bookId in booksAdd)
             {
                 context.EventBook.Add(new EventBook { BookId = bookId, EventId = id });
             }
             await context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return RedirectToAction("Item","Event",new { id});
         }
     }
 }

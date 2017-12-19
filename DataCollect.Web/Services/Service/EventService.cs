@@ -46,6 +46,11 @@ namespace DataCollect.Service.Service
             _context.SaveChanges();
         }
 
+        public List<int> GetBookIdList(int id)
+        {
+            return _context.EventBook.Where(t => t.EventId == id).Select(t => t.BookId).ToList();
+        }
+
         public void Publish(int id)
         {
             var event1 = _context.Event.SingleOrDefault(t => t.Id == id);

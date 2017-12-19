@@ -13,7 +13,7 @@
         {
             <div>
                 <span>@book.Name</span>
-                <input name="books" type="checkbox" value="@book.Id" />
+                <input name="books" type="checkbox" value="@book.Id" @(Model.BookIdList.Any(t=>t==book.Id)?"checked":"")/>
             </div>
         }
     </div>

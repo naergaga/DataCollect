@@ -1,3 +1,7 @@
 ﻿.sheet-item{
-    list-style:none;
+    table{
+        td,th{
+            min-width:6rem;
+        }
+    }
 }

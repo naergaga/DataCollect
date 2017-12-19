@@ -1,67 +1,64 @@
 ﻿@model BookModel
-
-@if (Model.CanExport)
-{
-    <div class="d-flex">
-        <div>工作薄:@Model.Book.Name</div>
-        <a asp-controller="Book" asp-action="Export" asp-route-id="@Model.Book.Id">导出</a>
-    </div>
-}
-else
-{
-    <h5>@Model.Book.Name</h5>
-}
-@foreach (var sheet in Model.Book.Sheets)
-{
-    <h5>@sheet.Name</h5>
-    @*<ul class="sheet-item d-flex">
-            @foreach (var col in sheet.Columns)
-            {
-                <li>@col.Name</li>
-            }
-        </ul>*@
-    <table>
-        <tr>
-            @foreach (var col in sheet.Columns)
-            {
-                <th>@col.Name</th>
-            }
-            @if (Model.Edit)
-            {
-                <th></th>
-            }
-        </tr>
-        @if (sheet.Rows != null)
-        {
-            @foreach (var row in sheet.Rows)
-            {
+<div class="book-item">
+    @if (Model.CanExport)
+    {
+        <div class="d-flex">
+            <div>工作薄:@Model.Book.Name</div>
+            <a asp-controller="Book" asp-action="Export" asp-route-id="@Model.Book.Id">导出</a>
+        </div>
+    }
+    else
+    {
+        <h5>@Model.Book.Name</h5>
+    }
+    @foreach (var sheet in Model.Book.Sheets)
+    {
+        <div class="sheet-item">
+            <h5>@sheet.Name</h5>
+            <table>
                 <tr>
-                    @foreach (var data in row.Data)
+                    @foreach (var col in sheet.Columns)
                     {
-                        <td>@data.Value</td>
+                        <th>@col.Name</th>
                     }
                     @if (Model.Edit)
                     {
-                        <td>
-                    @*<a asp-controller="Event" asp-action="RemoveRow" asp-route-id="@row.Id">删除</a>*@
-                            <button data-link="@Url.Action("RemoveRow","EventAction",new { id=row.Id})" class="btnDeleteRow">删除</button>
-                        </td>
+                        <th></th>
                     }
                 </tr>
-            }
-        }
-    </table>
-    @if (Model.Edit)
-    {
-        <form method="post" asp-controller="Book" asp-action="AddRow" asp-route-sheetId="@sheet.Id">
-            @for (int i = 0; i < sheet.Columns.Count; i++)
-            {
-                var col = sheet.Columns[i];
-            <div>
-                <label>@col.Name</label>
-                <input name="rowData[@i]" type="text" />
-            </div>
-            }
-            <button type="submit">添加</button>
-        </form>}
-}
+                @if (sheet.Rows != null)
+                {
+                    @foreach (var row in sheet.Rows)
+                    {
+                        <tr>
+                            @foreach (var data in row.Data)
+                            {
+                                <td>@data.Value</td>
+                            }
+                            @if (Model.Edit)
+                            {
+                                <td>
+                                    @*<a asp-controller="Event" asp-action="RemoveRow" asp-route-id="@row.Id">删除</a>*@
+                                    <button data-link="@Url.Action("RemoveRow","EventAction",new { id=row.Id})" class="btnDeleteRow">删除</button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        @if (Model.Edit)
+        {
+            <form method="post" asp-controller="Book" asp-action="AddRow" asp-route-sheetId="@sheet.Id">
+                @for (int i = 0; i < sheet.Columns.Count; i++)
+                {
+                    var col = sheet.Columns[i];
+                    <div>
+                        <label>@col.Name</label>
+                        <input name="rowData[@i]" type="text" />
+                    </div>
+                }
+                <button type="submit">添加</button>
+            </form>}
+    }
+</div>

@@ -5,18 +5,13 @@
 
 <h5>@Model.CollectEvent.Name</h5>
 
-<a asp-page="/Event/AddBook">添加工作簿</a>
-<a asp-page="/Event/AddBook">导出</a>
+<a asp-page="/Event/AddBook">管理工作簿</a>
 
-<div>
-    @foreach (var book in Model.CollectEvent.Books)
-    {
-        <div>
-            @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book, CanExport = true }))
-        </div>
-    }
-    @(await Component.InvokeAsync<PageViewComponent>(new PageOptionModel {Option=Model.PageOption }))
-</div>
+@foreach (var book in Model.CollectEvent.Books)
+{
+    @(await Component.InvokeAsync<BookViewComponent>(new BookModel { Book = book, CanExport = true }))
+}
+@(await Component.InvokeAsync<PageViewComponent>(new PageOptionModel { Option = Model.PageOption }))
 
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
