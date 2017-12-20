@@ -11,7 +11,6 @@
     var lastPageLinkEnable = startPage > 10;
     var nextPageLinkEnable = endPage < totalPage;
 }
-@if (totalPage <= 1) { return; }
 <ul class="pagination">
     <li>
         @if (lastPageLinkEnable)

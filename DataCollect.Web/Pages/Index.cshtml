@@ -10,7 +10,9 @@
 
 
 <div>
-    <a  asp-controller="Event" asp-action="Index">管理任务</a>
+    @if (ViewBag.isAdmin)
+    {
+        <a asp-controller="Event" asp-action="Index">管理任务</a>}
     <div>当前收集任务：</div>
     <ul>
         @if (ViewBag.isAdmin)
@@ -28,13 +30,4 @@
             }
         }
     </ul>
-    <div>
-        <h5>数据库设计</h5>
-        <ul>
-            <li><del>发布的状态 确实的体现</del></li>
-            <li><del>分页数据准备</del> 分页样式</li>
-            <li class=""><del>为用户明确 单独的UI</del></li>
-        </ul>
-    </div>
-    <img class="img-responsive" src="~/images/数据库.png" />
 </div>

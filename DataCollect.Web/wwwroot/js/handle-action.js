@@ -5,7 +5,7 @@
     }
 
     $(".btnDeleteRow").click(function () {
-        var deleteUrl = $(".btnDeleteRow").data("link");
+        var deleteUrl = $(this).data("link");
         console.log(deleteUrl);
         $.post(deleteUrl, function (result) {
             if (result.success) {

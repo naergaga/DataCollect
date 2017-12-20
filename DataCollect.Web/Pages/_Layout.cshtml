@@ -24,7 +24,7 @@
     </environment>
 </head>
 <body>
-    <nav class="home-nav bg-gray">
+    <div class="home-nav bg-gray">
         <div class="container">
             <div>
                 <a asp-page="/Index">数据收集</a>
@@ -40,7 +40,7 @@
             </div>
             @await Html.PartialAsync("/Pages/_LoginPartial.cshtml")
         </div>
-    </nav>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
